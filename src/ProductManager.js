@@ -1,6 +1,6 @@
 import { promises as fs } from "fs";
 
-class ProductManager {
+export default class ProductManager {
   constructor() {
     this.items = "./products.txt";
     this.products = [];
@@ -64,24 +64,13 @@ class ProductManager {
   }
 }
 
-const products = new ProductManager();
-
-products.addProduct("name001", "description001", 50, "img001", "001", 1);
+/* products.addProduct("name001", "description001", 50, "img001", "001", 1);
 products.addProduct("name002", "description002", 50, "img002", "002", 1);
-products.addProduct("name003", "description003", 50, "img002", "003", 1);
-
-/* products.getProducts(); */
-
-/* products.getProductById(1);
-products.getProductById(4); */
-
-/* products.deleteProductById(3); */
-
-/* products.updateProducts({
-  title: "name001",
-  description: "description001",
-  price: 100,
-  thumbnail: "img001",
-  code: "001",
-  id: 1,
-}); */
+products.addProduct("name003", "description003", 50, "img003", "003", 1);
+products.addProduct("name004", "description004", 50, "img004", "004", 1);
+products.addProduct("name005", "description005", 50, "img005", "005", 1);
+products.addProduct("name006", "description006", 50, "img006", "006", 1);
+products.addProduct("name007", "description007", 50, "img007", "007", 1);
+products.addProduct("name008", "description008", 50, "img008", "008", 1);
+products.addProduct("name009", "description009", 50, "img009", "009", 1);
+products.addProduct("name010", "description010", 50, "img010", "010", 1); */
