@@ -1,23 +1,42 @@
 import express from "express";
+import { engine } from "express-handlebars";
+import { __dirname } from "./utils.js";
+import * as path from "path";
+
 import ProductRouter from "./router/products.routes.js";
 import CartRouter from "./router/carts.routes.js";
+import viewsRouter from "./router/views.routes.js";
 
-const app = express();
+import ProductManager from "./controllers/ProductManager.js";
 
+import { Server } from "socket.io";
+
+const product = new ProductManager();
 const PORT = 8080;
 
+const app = express();
 app.use(express.json());
-
 app.use(express.urlencoded({ extended: true }));
+app.use("/", express.static(__dirname + "/public"));
 
-app.use("/api/products", ProductRouter);
-
-app.use("/api/cart", CartRouter);
+app.engine("handlebars", engine());
+app.set("view engine", "handlebars");
+app.set("views", path.resolve(__dirname + "/views"));
 
 const server = app.listen(PORT, () => {
   console.log(`Express is listening on port ${server.address().port}`);
 });
 
-server.on("error", (error) => {
-  console.error("Server Error:", error);
+export const io = new Server(server);
+
+app.use("/api/products", ProductRouter);
+app.use("/api/cart", CartRouter);
+app.use("/", viewsRouter);
+
+io.on("connection", async (socket) => {
+  console.log(`user ${socket.id} connected`);
+  const allProducts = await product.getProducts();
+  io.emit("updateList", {
+    products: allProducts,
+  });
 });
