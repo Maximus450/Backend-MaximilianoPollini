@@ -33,10 +33,15 @@ app.use("/api/products", ProductRouter);
 app.use("/api/cart", CartRouter);
 app.use("/", viewsRouter);
 
-io.on("connection", async (socket) => {
+io.of("/realTimeProducts").on("connection", async (socket) => {
   console.log(`user ${socket.id} connected`);
-  const allProducts = await product.getProducts();
-  io.emit("updateList", {
-    products: allProducts,
+  socket.emit("initalProductList", product.getProducts());
+  socket.on("productCreated", (productData) => {
+    console.log("Created new Product", productData);
+    const productItem = document.createElement("li");
+    productItem.textContent = `${productData.title} - ${productData.price}`;
+
+    const productList = document.getElementById("productList");
+    productList.appendChild(productItem);
   });
 });

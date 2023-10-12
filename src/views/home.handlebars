@@ -1,9 +1,13 @@
-<h2>{{mainTitle}}</h2>
-{{#each products}}
-  <h3>{{this.tittle}}</h3>
-  <p>{{this.description}}</p>
-  <p>{{this.price}}</p>
-  <p>{{this.thumbnail}}</p>
-  <p>{{this.code}}</p>
-  <p>{{this.stock}}</p>
-{{/each}}
+<html>
+  <head>
+    <title>Product List</title>
+  </head>
+  <body>
+    <h2>Product List</h2>
+    <ul>
+      {{#each products}}
+        <li>{{this.title}} - {{this.price}}</li>
+      {{/each}}
+    </ul>
+  </body>
+</html>
